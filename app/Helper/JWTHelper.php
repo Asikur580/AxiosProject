@@ -10,7 +10,7 @@ class JWTHelper
 {
 
     public static function CreateToken($userEmail,$userID){
-        $key="123-xyz-abc";
+        $key=env('JWT_KEY');
         $payload=[
             'iss'=>'laravel-demo',
             'iat'=>time(),
@@ -21,13 +21,25 @@ class JWTHelper
         return JWT::encode($payload,$key,'HS256');
     }
 
+    public static function CreateTokenForSetPassword($userEmail){
+        $key=env('JWT_KEY');
+        $payload=[
+            'iss'=>'laravel-demo',
+            'iat'=>time(),
+            'exp'=>time()+60*5,
+            'userEmail'=>$userEmail,
+            'userID'=>''
+        ];
+        return JWT::encode($payload,$key,'HS256');
+    }
+
     public static function DecodeToken($token){
         try {
             if($token==null){
                 return "unauthorized";
             }
             else{
-                $key="123-xyz-abc";
+                $key=env('JWT_KEY');
                 return JWT::decode($token,new Key($key,'HS256'));
             }
 

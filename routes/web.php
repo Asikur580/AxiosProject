@@ -17,6 +17,9 @@ Route::view('/dashboard','pages.dashboard.dashboard')->middleware([TokenVerifica
 
 Route::post('/registration',[userController::class,'registration'])->name('user.registration');
 Route::post('/login',[userController::class,'login'])->name('user.login');
+Route::post('/sendOTP',[userController::class,'sendOTP'])->name('user.sendOTP');
+Route::post('/verifyOTP',[userController::class,'verifyOTP'])->name('user.verifyOTP');
+Route::post('/resetPassword',[userController::class,'resetPassword'])->name('user.resetPassword')->middleware([TokenVerificationMiddleware::class]);
 Route::get("/profile",[UserController::class,'profile'])->middleware([TokenVerificationMiddleware::class]);
 Route::get("/logout",[UserController::class,'logout'])->middleware([TokenVerificationMiddleware::class]);
 
